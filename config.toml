@@ -12,8 +12,8 @@ PI_CODING_AGENT_DIR="/home/$USER/.pi/agent"
 
 ## Dotfile Repos
 DOTS_DIR="/home/$USER/Dotfiles"
-DOTS_OMARCHY='git@github.com:r3b1s/quattro-dots.git'
-DOTS_ATHENA='git@github.com:r3b1s/athena-dots.git'
+DOTS_OMARCHY='https://github.com:r3b1s/quattro-dots'
+DOTS_ATHENA='https://github.com:r3b1s/athena-dots'
 
 # TOOLS
 [tools]
@@ -74,7 +74,7 @@ git clone "${DOTS_ATHENA}"
 """
 
 ### Pi
-[task.dots-pull-pi]
+[tasks.dots-pull-pi]
 description = "Clone athena dotfiles to local machine"
 run = """
 #!/usr/bin/env bash
