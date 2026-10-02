@@ -10,6 +10,11 @@ auto_prune = false
 [env]
 PI_CODING_AGENT_DIR="/home/$USER/.pi/agent"
 
+## Dotfile Repos
+DOTS_DIR="/home/$USER/Dotfiles"
+DOTS_OMARCHY='git@github.com:r3b1s/quattro-dots.git'
+DOTS_ATHENA='git@github.com:r3b1s/athena-dots.git'
+
 # TOOLS
 [tools]
 gh = "latest"
@@ -45,4 +50,36 @@ raw_args = true
 description = "Pi CTF agent | Install a plugin"
 run = 'PI_CODING_AGENT_DIR="/home/$USER/.pi/agent_ctf" pi remove'
 
-## Other
+
+## Pull Dotfiles
+
+### omarchy
+[tasks.dots-pull-omarchy]
+description = "Clone omarchy dotfiles to local machine"
+run = """
+#!/usr/bin/env bash
+mkdir -p "${DOTS_DIR}"
+cd "${DOTS_DIR}"
+git clone "${DOTS_OMARCHY}"
+"""
+
+### AthenaOS
+[tasks.dots-pull-athena]
+description = "Clone athena dotfiles to local machine"
+run = """
+#!/usr/bin/env bash
+mkdir -p "${DOTS_DIR}"
+cd "${DOTS_DIR}"
+git clone "${DOTS_ATHENA}"
+"""
+
+### Pi
+[task.dots-pull-pi]
+description = "Clone athena dotfiles to local machine"
+run = """
+#!/usr/bin/env bash
+cd "${HOME}"
+git clone "${DOTS_PI}"
+mv "${DOTS_PI} .pi
+"""
+
