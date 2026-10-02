@@ -12,8 +12,8 @@ PI_CODING_AGENT_DIR="/home/$USER/.pi/agent"
 
 ## Dotfile Repos
 DOTS_DIR="/home/$USER/Dotfiles"
-DOTS_OMARCHY='https://github.com:r3b1s/quattro-dots'
-DOTS_ATHENA='https://github.com:r3b1s/athena-dots'
+DOTS_OMARCHY='https://github.com/r3b1s/quattro-dots'
+DOTS_ATHENA='https://github.com/r3b1s/athena-dots'
 
 # TOOLS
 [tools]
