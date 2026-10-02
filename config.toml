@@ -1,0 +1,48 @@
+# SETTINGS
+[settings]
+minimum_release_age = "3d"
+minimum_release_age_excludes = ["pi"]
+
+[settings.upgrade]
+auto_prune = false
+
+# ENV VARS
+[env]
+PI_CODING_AGENT_DIR="/home/$USER/.pi/agent"
+
+# TOOLS
+[tools]
+gh = "latest"
+node = "latest"
+uv = "latest"
+
+## ai slop
+pi = "latest"
+"npm:command-code" = "latest"
+"npm:donsetch" = "latest"
+agent-browser = "latest"
+
+# TASKS
+
+## Pi Harness
+[tasks.pi]
+raw_args = true
+description = "Pi Vanilla"
+run = 'PI_CODING_AGENT_DIR="/home/$USER/.pi/agent" pi'
+
+[tasks.pi-ctf]
+raw_args = true
+description = "Pi CTF agent | Launch"
+run = 'PI_CODING_AGENT_DIR="/home/$USER/.pi/agent_ctf" pi --append-system-prompt "${PI_CODING_ADENT_DIR}/../system-prompts/append_ctf_0.md"'
+
+[tasks.pi-ctf-install]
+raw_args = true
+description = "Pi CTF agent | Install a plugin"
+run = 'PI_CODING_AGENT_DIR="/home/$USER/.pi/agent_ctf" pi install'
+
+[tasks.pi-ctf-uninstall]
+raw_args = true
+description = "Pi CTF agent | Install a plugin"
+run = 'PI_CODING_AGENT_DIR="/home/$USER/.pi/agent_ctf" pi remove'
+
+## Other
