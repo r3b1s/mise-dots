@@ -32,6 +32,7 @@ PI_CODING_AGENT_DIR="/home/$USER/.pi/agent"
 [tools]
 node = "latest"
 uv = "latest"
+age = "1.3.2"
 
 ## ai slop
 pi = "latest"
@@ -101,13 +102,32 @@ description = "Pi CTF agent | Install a plugin"
 run = 'PI_CODING_AGENT_DIR="${DOTS_PI_DIR}/agent_ctf" pi remove'
 
 
+## CTF
+
+[tasks.engagement-template]
+description = "Clone a CTF / engagement template to the cwd"
+run = """
+#!/usr/bin/env bash
+templateUrl='https://github.com/r3b1s/engagement-template'
+git clone ${templateUrl}
+cd ${templateUrl}
+rm -rf .git
+"""
+
+
+# [tasks.xyz]
+# description = ""
+# #!/usr/bin/env bash
+# run = """
+# """
+
 ## Other
 
 ### Scaffold Dirs
 [tasks.scaffold-dirs]
 description = "Scaffold common directories"
-#!/usr/bin/env bash
 run = """
+#!/usr/bin/env bash
 mkdir -p \
   ~/tmp \
   ~/Dotfiles \
@@ -119,7 +139,7 @@ mkdir -p \
 """
 
 # [tasks.xyz]
-# description = ""
-# #!/usr/bin/env bash
+# description = """
 # run = """
+# #!/usr/bin/env bash
 # """
