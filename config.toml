@@ -112,7 +112,7 @@ run = 'PI_CODING_AGENT_DIR="${DOTS_PI_DIR}/agent_ctf" pi remove'
 raw_args = true
 dir = "{{cwd}}"
 description = "omp Vanilla"
-run = 'PI_CONFIG_DIR="~/.omp" PI_CODING_AGENT_DIR="~/.omp/agent" omp --cwd="."'
+run = 'PI_CONFIG_DIR="/home/$USER/.omp" PI_CODING_AGENT_DIR="/home/$USER/.omp/agent" omp'
 
 ## CTF
 
