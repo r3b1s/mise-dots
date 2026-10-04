@@ -36,6 +36,7 @@ age = "1.3.2"
 
 ## ai slop
 pi = "latest"
+"github:can1357/oh-my-pi" = "latest"
 "npm:command-code" = "latest"
 "npm:donsetch" = "latest"
 agent-browser = "latest"
@@ -83,28 +84,40 @@ git remote set-url origin "${DOTS_ATHENA_SSH}"
 ## Pi Harness
 [tasks.pi]
 raw_args = true
+dir = "{{cwd}}"
 description = "Pi Vanilla"
 run = 'PI_CODING_AGENT_DIR="${DOTS_PI_DIR}/agent" pi'
 
 [tasks.pi-ctf]
 raw_args = true
+dir = "{{cwd}}"
 description = "Pi CTF agent | Launch"
 run = 'PI_CODING_AGENT_DIR="${DOTS_PI_DIR}/agent_ctf" pi --append-system-prompt "${PI_CODING_ADENT_DIR}/../system-prompts/append_ctf_0.md"'
 
 [tasks.pi-ctf-install]
 raw_args = true
+dir = "{{cwd}}"
 description = "Pi CTF agent | Install a plugin"
 run = 'PI_CODING_AGENT_DIR="${DOTS_PI_DIR}/agent_ctf" pi install'
 
 [tasks.pi-ctf-uninstall]
 raw_args = true
+dir = "{{cwd}}"
 description = "Pi CTF agent | Install a plugin"
 run = 'PI_CODING_AGENT_DIR="${DOTS_PI_DIR}/agent_ctf" pi remove'
 
+## omp Harness
+## - https://omp.sh/docs/env
+[tasks.omp]
+raw_args = true
+dir = "{{cwd}}"
+description = "omp Vanilla"
+run = 'PI_CONFIG_DIR="~/.omp" PI_CODING_AGENT_DIR="~/.omp/agent" omp --cwd="."'
 
 ## CTF
 
 [tasks.engagement-template]
+dir = "{{cwd}}"
 description = "Clone a CTF / engagement template to the cwd"
 run = """
 #!/usr/bin/env bash
