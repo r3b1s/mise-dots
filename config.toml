@@ -1,4 +1,4 @@
-# SETTINGS
+# -------- SETTINGS --------- #
 [settings]
 minimum_release_age = "3d"
 minimum_release_age_excludes = ["pi"]
@@ -6,8 +6,12 @@ minimum_release_age_excludes = ["pi"]
 [settings.upgrade]
 auto_prune = false
 
-# ENV VARS
+
+# ----------- ENV ----------- #
 [env]
+
+## Editor
+EDITOR='nvim'
 
 ## Directories & Repositories
 DOTS_DIR="/home/$USER/Dotfiles"
@@ -28,7 +32,9 @@ DOTS_ATHENA_SSH='git@github.com:r3b1s/athena-dots.git'
 ## Pi default global cfg | Safety catch-all. Pi-derivative harnesses like oh-my-pi will clobber Pi's cfg files & sessions
 PI_CODING_AGENT_DIR="/home/$USER/.pi/agent"
 
-# TOOLS
+
+
+# ---------- TOOLS ---------- #
 [tools]
 node = "latest"
 uv = "latest"
@@ -41,23 +47,57 @@ pi = "latest"
 "npm:donsetch" = "latest"
 agent-browser = "latest"
 
-# TASKS
 
-## Pull Dotfiles
 
-### Pi
-[tasks.dots-pull-pi]
-description = "Clone athena dotfiles to local machine"
+# ---------- TASKS ---------- #
+
+## Dotfiles
+
+### Setup Omarchy
+[tasks.omarchy-dots-setup]
+description = "Setup omarchy with personal dotfiles"
 run = """
 #!/usr/bin/env bash
+
+# Ensure we are running on Omarchy
+if [[ ! -r /etc/os-release ]]; then
+  echo "Error: /etc/os-release not found; cannot verify OS." >&2
+  exit 1
+fi
+
+. /etc/os-release
+if [[ "${ID,,}" != "omarchy" && "${NAME,,}" != *omarchy* ]]; then
+  echo "Error: this task requires Omarchy (detected: ${PRETTY_NAME:-${NAME:-unknown}})." >&2
+  exit 1
+fi
+
+mkdir -p "${DOTS_DIR}"
+
+# Omarchy
+cd "${DOTS_DIR}"
+git clone "${DOTS_OMARCHY}"
+cd "${DOTS_OMARCHY_DIR}"
+git remote set-url origin "${DOTS_OMARCHY_SSH}"
+bash install.sh
+
+# Omarchy Pinkrot Theme
+themename='omarchy-pinkrot-theme'
+cd "${DOTS_DIR}"
+git clone "https://github.com/r3b1s/${themename}.git"
+cd "${themename}"
+git remote set-url origin 'git@github.com:r3b1s/${themename}.git'
+ln -s "${DOTS_DIR}/${themename}" "/home/$USER/.config/omarchy/themes/${themename}"
+
+# Pi
 cd "${DOTS_DIR}"
 git clone "${DOTS_PI}"
 cd "${DOTS_PI_DIR}"
 git remote set-url origin "${DOTS_PI_SSH}"
+
 """
 
-### omarchy
-[tasks.dots-pull-omarchy]
+### Omarchy Dots
+[tasks.dclone-omarchy]
 description = "Clone omarchy dotfiles to local machine"
 run = """
 #!/usr/bin/env bash
@@ -68,8 +108,8 @@ cd "${DOTS_OMARCHY_DIR}"
 git remote set-url origin "${DOTS_OMARCHY_SSH}"
 """
 
-### AthenaOS
-[tasks.dots-pull-athena]
+### AthenaOS Dots
+[tasks.dclone-athena]
 description = "Clone athena dotfiles to local machine"
 run = """
 #!/usr/bin/env bash
@@ -80,6 +120,16 @@ cd "${DOTS_ATHENA_DIR}"
 git remote set-url origin "${DOTS_ATHENA_SSH}"
 """
 
+### Pi Dots
+[tasks.dclone-pi]
+description = "Clone Pi dotfiles"
+run = """
+#!/usr/bin/env bash
+cd "${DOTS_DIR}"
+git clone "${DOTS_PI}"
+cd "${DOTS_PI_DIR}"
+git remote set-url origin "${DOTS_PI_SSH}"
+"""
 
 ## Pi Harness
 [tasks.pi]
