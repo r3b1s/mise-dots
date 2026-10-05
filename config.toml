@@ -78,7 +78,7 @@ cd "${DOTS_DIR}"
 git clone "${DOTS_OMARCHY_HTTPS}"
 cd "${DOTS_OMARCHY_DIR}"
 git remote set-url origin "${DOTS_OMARCHY_SSH}"
-bash install.sh
+bash < "${DOTS_OMARCHY_DIR}/install.sh"
 
 # Omarchy Pinkrot Theme
 themename='omarchy-pinkrot-theme'
