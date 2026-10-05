@@ -75,7 +75,7 @@ mkdir -p "${DOTS_DIR}"
 
 # Omarchy
 cd "${DOTS_DIR}"
-git clone "${DOTS_OMARCHY}"
+git clone "${DOTS_OMARCHY_HTTPS}"
 cd "${DOTS_OMARCHY_DIR}"
 git remote set-url origin "${DOTS_OMARCHY_SSH}"
 bash install.sh
@@ -90,7 +90,7 @@ ln -s "${DOTS_DIR}/${themename}" "/home/$USER/.config/omarchy/themes/${themename
 
 # Pi
 cd "${DOTS_DIR}"
-git clone "${DOTS_PI}"
+git clone "${DOTS_PI_HTTPS}"
 cd "${DOTS_PI_DIR}"
 git remote set-url origin "${DOTS_PI_SSH}"
 
@@ -103,7 +103,7 @@ run = """
 #!/usr/bin/env bash
 mkdir -p "${DOTS_DIR}"
 cd "${DOTS_DIR}"
-git clone "${DOTS_OMARCHY}"
+git clone "${DOTS_OMARCHY_HTTPS}"
 cd "${DOTS_OMARCHY_DIR}"
 git remote set-url origin "${DOTS_OMARCHY_SSH}"
 """
@@ -115,7 +115,7 @@ run = """
 #!/usr/bin/env bash
 mkdir -p "${DOTS_DIR}"
 cd "${DOTS_DIR}"
-git clone "${DOTS_ATHENA}"
+git clone "${DOTS_ATHENA_HTTPS}"
 cd "${DOTS_ATHENA_DIR}"
 git remote set-url origin "${DOTS_ATHENA_SSH}"
 """
@@ -126,7 +126,7 @@ description = "Clone Pi dotfiles"
 run = """
 #!/usr/bin/env bash
 cd "${DOTS_DIR}"
-git clone "${DOTS_PI}"
+git clone "${DOTS_PI_HTTPS}"
 cd "${DOTS_PI_DIR}"
 git remote set-url origin "${DOTS_PI_SSH}"
 """
