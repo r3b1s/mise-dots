@@ -17,11 +17,15 @@ EDITOR='nvim'
 DOTS_DIR="/home/$USER/Dotfiles"
 
 ## Directories & Repositories
+DOTS_MISE_DIR="${DOTS_DIR}/mise-dots"
+DOTS_MISE_HTTPS='https://github.com/r3b1s/mise-dots'
+DOTS_MISE_SSH='git@github.com:r3b1s/mise-dots.git'
+
 DOTS_PI_DIR="${DOTS_DIR}/pi-dots"
 DOTS_PI_HTTPS='https://github.com/r3b1s/pi-dots'
 DOTS_PI_SSH='git@github.com:r3b1s/pi-dots.git'
 
-DOTS_OMARCHY_DIR="${DOTS_DIR}/omarchy-dots"
+DOTS_OMARCHY_DIR="${DOTS_DIR}/quattro-dots"
 DOTS_OMARCHY_HTTPS='https://github.com/r3b1s/quattro-dots'
 DOTS_OMARCHY_SSH='git@github.com:r3b1s/quattro-dots.git'
 
