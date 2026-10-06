@@ -50,6 +50,8 @@ pi = "latest"
 "npm:command-code" = "latest"
 "npm:donsetch" = "latest"
 agent-browser = "latest"
+codex = "latest"
+gh = "latest"
 
 
 
