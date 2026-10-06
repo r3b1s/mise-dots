@@ -14,8 +14,6 @@ link_dir="/home/$USER/.config/mise"
 mkdir -p "${DOTS}"
 cd "${DOTS}"
 git clone "${mise_dots_https}"
-cd "${mise_dots}"
-git remote set-url origin "${mise_dots_ssh}"
 
 mkdir -p "${link_dir}"
 rm "${link_dir}/config.toml"

@@ -100,7 +100,47 @@ git clone "${DOTS_PI_HTTPS}"
 cd "${DOTS_PI_DIR}"
 git remote set-url origin "${DOTS_PI_SSH}"
 
+# mise repo set-url to ssh
+cd "${DOTS_MISE_DIR}"
+git remote set-url origin "{DOTS_MISE_SSH}"
 """
+
+### Setup Omarchy - https repos
+[tasks.omarchy-dots-setup-https]
+description = "Setup omarchy with personal dotfiles"
+run = """
+#!/usr/bin/env bash
+
+# Ensure we are running on Omarchy
+if [[ ! -r /etc/os-release ]]; then
+  echo "Error: /etc/os-release not found; cannot verify OS." >&2
+  exit 1
+fi
+
+. /etc/os-release
+if [[ "${ID,,}" != "omarchy" && "${NAME,,}" != *omarchy* ]]; then
+  echo "Error: this task requires Omarchy (detected: ${PRETTY_NAME:-${NAME:-unknown}})." >&2
+  exit 1
+fi
+
+mkdir -p "${DOTS_DIR}"
+
+# Omarchy
+cd "${DOTS_DIR}"
+git clone "${DOTS_OMARCHY_HTTPS}"
+bash < "${DOTS_OMARCHY_DIR}/install.sh"
+
+# Omarchy Pinkrot Theme
+themename='omarchy-pinkrot-theme'
+cd "${DOTS_DIR}"
+git clone "https://github.com/r3b1s/${themename}.git"
+ln -s "${DOTS_DIR}/${themename}" "/home/$USER/.config/omarchy/themes/${themename}"
+
+# Pi
+cd "${DOTS_DIR}"
+git clone "${DOTS_PI_HTTPS}"
+"""
+
 
 ### Omarchy Dots
 [tasks.dclone-omarchy]
