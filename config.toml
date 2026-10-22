@@ -22,17 +22,17 @@ DOTS_MISE_DIR="${DOTS_DIR}/mise-dots"
 DOTS_MISE_HTTPS='https://github.com/r3b1s/mise-dots'
 DOTS_MISE_SSH='git@github.com:r3b1s/mise-dots.git'
 
-DOTS_PI_DIR="${DOTS_DIR}/pi-dots"
-DOTS_PI_HTTPS='https://github.com/r3b1s/pi-dots'
-DOTS_PI_SSH='git@github.com:r3b1s/pi-dots.git'
+DOTS_HARNESS_DIR="${DOTS_DIR}/harness-dots"
+DOTS_HARNESS_HTTPS='https://github.com/r3b1s/harness-dots'
+DOTS_HARNESS_SSH='git@github.com:r3b1s/harness-dots.git'
 
 DOTS_OMARCHY_DIR="${DOTS_DIR}/quattro-dots"
 DOTS_OMARCHY_HTTPS='https://github.com/r3b1s/quattro-dots'
 DOTS_OMARCHY_SSH='git@github.com:r3b1s/quattro-dots.git'
 
-DOTS_ATHENA_DIR="${DOTS_DIR}/athena-dots"
-DOTS_ATHENA_HTTPS='https://github.com/r3b1s/athena-dots'
-DOTS_ATHENA_SSH='git@github.com:r3b1s/athena-dots.git'
+DOTS_ARCH_DIR="${DOTS_DIR}/cachy-dots"
+DOTS_ARCH_HTTPS='https://github.com/r3b1s/cachy-dots'
+DOTS_ARCH_SSH='git@github.com:r3b1s/cachy-dots.git'
 
 ## Pi default global cfg | Safety catch-all. Pi-derivative harnesses like oh-my-pi will clobber Pi's cfg files & sessions
 PI_CODING_AGENT_DIR="/home/$USER/.pi/agent"
@@ -96,11 +96,11 @@ cd "${themename}"
 git remote set-url origin 'git@github.com:r3b1s/${themename}.git'
 ln -s "${DOTS_DIR}/${themename}" "/home/$USER/.config/omarchy/themes/${themename}"
 
-# Pi
+# AI Harness configs
 cd "${DOTS_DIR}"
-git clone "${DOTS_PI_HTTPS}"
-cd "${DOTS_PI_DIR}"
-git remote set-url origin "${DOTS_PI_SSH}"
+git clone "${DOTS_HARNESS_HTTPS}"
+cd "${DOTS_HARNESS_DIR}"
+git remote set-url origin "${DOTS_HARNESS_SSH}"
 
 # mise repo set-url to ssh
 cd "${DOTS_MISE_DIR}"
@@ -140,7 +140,7 @@ ln -s "${DOTS_DIR}/${themename}" "/home/$USER/.config/omarchy/themes/${themename
 
 # Pi
 cd "${DOTS_DIR}"
-git clone "${DOTS_PI_HTTPS}"
+git clone "${DOTS_HARNESS_HTTPS}"
 """
 
 ### Omarchy Dots
@@ -155,15 +155,15 @@ cd "${DOTS_OMARCHY_DIR}"
 git remote set-url origin "${DOTS_OMARCHY_SSH}"
 """
 
-### Pi Dots
-[tasks.dclone-pi]
+### Harness Dots
+[tasks.dclone-harness]
 description = "Clone Pi dotfiles"
 run = """
 #!/usr/bin/env bash
 cd "${DOTS_DIR}"
-git clone "${DOTS_PI_HTTPS}"
-cd "${DOTS_PI_DIR}"
-git remote set-url origin "${DOTS_PI_SSH}"
+git clone "${DOTS_HARNESS_HTTPS}"
+cd "${DOTS_HARNESS_DIR}"
+git remote set-url origin "${DOTS_HARNESS_SSH}"
 """
 
 ## CTF
@@ -176,6 +176,30 @@ templateUrl='https://github.com/r3b1s/engagement-template'
 git clone ${templateUrl}
 cd ${templateUrl}
 rm -rf .git
+"""
+
+### Setup Omarchy - https repos
+[tasks.arch-dots-setup-https]
+description = "Setup omarchy with personal dotfiles"
+run = """
+#!/usr/bin/env bash
+
+mkdir -p "${DOTS_DIR}"
+
+# Arch dotfiles
+cd "${DOTS_DIR}"
+git clone "${DOTS_ARCH_HTTPS}"
+bash < "${DOTS_ARCH_DIR}/install.sh"
+
+# Omarchy Pinkrot Theme
+themename='omarchy-pinkrot-theme'
+cd "${DOTS_DIR}"
+git clone "https://github.com/r3b1s/${themename}.git"
+ln -s "${DOTS_DIR}/${themename}" "/home/$USER/.config/omarchy/themes/${themename}"
+
+# AI Harnesses
+cd "${DOTS_DIR}"
+git clone "${DOTS_HARNESS_HTTPS}"
 """
 
 
