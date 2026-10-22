@@ -1,3 +1,5 @@
+Personal global mise configuration, predominantly for shell-agnostic, portable, accessible tasks
+
 [setup.sh](https://raw.githubusercontent.com/r3b1s/mise-dots/refs/heads/main/setup.sh)
 
 ```sh
