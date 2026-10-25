@@ -34,6 +34,14 @@ DOTS_ARCH_DIR="${DOTS_DIR}/cachy-dots"
 DOTS_ARCH_HTTPS='https://github.com/r3b1s/cachy-dots'
 DOTS_ARCH_SSH='git@github.com:r3b1s/cachy-dots.git'
 
+DOTS_QUBES_DIR="${DOTS_DIR}/qubes-dots"
+DOTS_QUBES_HTTPS='https://github.com/r3b1s/qubes-dots'
+DOTS_QUBES_SSH='git@github.com:r3b1s/qubes-dots.git'
+
+DOTS_KANATA_DIR="${DOTS_DIR}/kanata-enthium"
+DOTS_KANATA_HTTPS='https://github.com/r3b1s/kanata-enthium'
+DOTS_KANATA_SSH='git@github.com:r3b1s/kanata-enthium.git'
+
 ## Pi default global cfg | Safety catch-all. Pi-derivative harnesses like oh-my-pi will clobber Pi's cfg files & sessions
 PI_CODING_AGENT_DIR="/home/$USER/.pi/agent"
 
