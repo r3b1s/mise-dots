@@ -4,7 +4,7 @@ This directory is for simple tasks that install a package globally via mise.
 For example:
 
 ```sh
-mise use -g npm:getpaseo/cli
+mise use -g npm:@getpaseo/cli
 ```
 
 
