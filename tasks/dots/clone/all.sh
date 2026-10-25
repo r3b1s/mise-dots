@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 #MISE description="Clone all dotfiles repositories"
 #USAGE flag "--ssh" help="Rewrite cloned remotes to SSH"
+#USAGE arg "[args]..." help="Additional arguments forwarded to underlying clone scripts"
 set -euo pipefail
 source "${MISE_TASK_DIR}/../../../lib/common.sh"
 
