@@ -60,3 +60,14 @@ use_ssh_when_requested() {
     export DOTS_GIT_PROTOCOL=ssh
   fi
 }
+
+# https_to_ssh <https-url>
+# Convert an HTTPS git URL to its SSH form:
+#   https://host/owner/repo(.git) -> git@host:owner/repo.git
+https_to_ssh() {
+  local url="${1:?https url required}"
+  local rest="${url#https://}"
+  local host="${rest%%/*}"
+  local path="${rest#*/}"
+  printf 'git@%s:%s.git\n' "${host}" "${path%.git}"
+}
