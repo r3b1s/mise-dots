@@ -14,4 +14,5 @@ mkdir -p \
   ~/Pictures \
   ~/Assets \
   ~/Downloads \
+  ~/Documents \
   ~/3rdParty
