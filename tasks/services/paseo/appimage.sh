@@ -40,25 +40,16 @@ DESKTOP_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/applications"
 ICON_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/icons/hicolor"
 DESKTOP_FILE="$DESKTOP_DIR/$SLUG.desktop"
 
-install_appimage_helper() {
+# Internal installer function: moves AppImage into ~/Applications with executable permissions
+install_appimage() {
     local src="$1"
     mkdir -p "$APPS_DIR"
-    local dest="$APPS_DIR/$(basename -- "$src")"
-    if [ "$(realpath -- "$src")" != "$(realpath -m -- "$dest")" ]; then
-        mv -f -- "$src" "$dest"
+    local dest_target="$APPS_DIR/$(basename -- "$src")"
+    if [ "$(realpath -- "$src")" != "$(realpath -m -- "$dest_target")" ]; then
+        mv -f -- "$src" "$dest_target"
     fi
-    chmod u+x -- "$dest"
+    chmod u+x -- "$dest_target"
 }
-
-if command -v install-appimage >/dev/null 2>&1; then
-    INSTALL_APPIMAGE="install-appimage"
-elif [ -x "$HOME/.local/bin/install-appimage" ]; then
-    INSTALL_APPIMAGE="$HOME/.local/bin/install-appimage"
-elif [ -x "$HOME/Dotfiles/cachy-dots/bin/install-appimage" ]; then
-    INSTALL_APPIMAGE="$HOME/Dotfiles/cachy-dots/bin/install-appimage"
-else
-    INSTALL_APPIMAGE="install_appimage_helper"
-fi
 
 entries_running() {
     [ -d "$DESKTOP_DIR" ] || return 0
@@ -171,7 +162,7 @@ else
         curl -fL $progress -o "$work/${dest##*/}" "$url"
         [ "$(sha256sum "$work/${dest##*/}" | awk '{ print $1 }')" = "$sha" ] \
             || die "the download does not match the sha256 GitHub publishes ($sha)"
-        $INSTALL_APPIMAGE "$work/${dest##*/}"
+        install_appimage "$work/${dest##*/}"
     fi
 fi
 
