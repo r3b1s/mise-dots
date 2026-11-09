@@ -74,18 +74,13 @@ if [ -e /usr/bin/kanata ] && ! pacman -Qo /usr/bin/kanata >/dev/null 2>&1; then
 fi
 
 if [ -z "$before" ]; then
-    say "Installing kanata package..."
-    if pacman -Si chaotic-aur/kanata >/dev/null 2>&1; then
-        run $SUDO pacman -Syu --needed --noconfirm chaotic-aur/kanata || die "could not install chaotic-aur/kanata"
-    elif pacman -Si kanata >/dev/null 2>&1; then
-        run $SUDO pacman -Syu --needed --noconfirm kanata || die "could not install kanata"
-    elif command -v yay >/dev/null 2>&1; then
-        run yay -S --needed --noconfirm kanata-bin || run yay -S --needed --noconfirm kanata
-    else
-        die "kanata package not found in pacman repos and yay is not installed"
+    if [ "$dry" != 1 ] && ! pacman -Si chaotic-aur/kanata >/dev/null 2>&1; then
+        die "chaotic-aur/kanata is unavailable: chaotic-aur repository is required"
     fi
+    say "Installing chaotic-aur/kanata exclusively (pacman -Syu, full sync from chaotic-aur)..."
+    run $SUDO pacman -Syu --needed --noconfirm chaotic-aur/kanata || die "could not install chaotic-aur/kanata"
 else
-    say "kanata $before is installed."
+    say "kanata $before is installed. A system upgrade (pacman -Syu) updates it."
 fi
 after=$(pacman -Q kanata 2>/dev/null || true)
 pkg_changed=0
