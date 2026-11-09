@@ -17,7 +17,7 @@ Installs closed-source/vendor applications shipped as prebuilt Linux archives:
 
 | Task | Description | Source / Install Method |
 |---|---|---|
-| `pkg:proprietary:antigravity-app` | Google Antigravity desktop application | Scrapes official Google download page, unpacks unprivileged, extracts icon from `resources/app.asar`, installs root-owned to `/usr/local/lib/antigravity` |
+| `pkg:proprietary:antigravity-app` | Google Antigravity desktop application | Scrapes official Google download page, unpacks unprivileged, extracts icon from `resources/app.asar`, installs root-owned to `/usr/local/lib/antigravity`, tracks versioning with upgrade detection, `--check`, and `--force` |
 | `pkg:proprietary:commandcode-app` | CommandCode desktop application | Downloads latest official AppImage from GitHub releases (`CommandCodeAI/desktop`), validates checksum, sets up desktop launcher and icons, supports `--check`, `--force`, and auto-upgrades |
 
 ### 3. CLI Tools (`pkg:*`)
