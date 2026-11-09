@@ -1,0 +1,13 @@
+# mise configuration for ArtCraft build environment
+# https://github.com/storytold/artcraft
+
+[tools]
+node = "24"
+rust = "stable"
+tauri-cli = "latest"
+cmake = "latest"
+
+[env]
+NODE_OPTIONS = "--max-old-space-size=8192"
+VITE_ENVIRONMENT_TYPE = "production"
+SQLX_OFFLINE = "true"
