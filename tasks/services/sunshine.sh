@@ -35,6 +35,11 @@ done
 
 command -v pacman >/dev/null || die "pacman not found: this is for Arch-based systems"
 
+is_omarchy=0
+if grep -qx 'ID=omarchy' /etc/os-release 2>/dev/null || pacman-conf --repo-list 2>/dev/null | grep -qx 'omarchy'; then
+    is_omarchy=1
+fi
+
 is_cachyos=0
 if grep -qx 'ID=cachyos' /etc/os-release 2>/dev/null || pacman-conf --repo-list 2>/dev/null | grep -qx 'cachyos'; then
     is_cachyos=1
@@ -106,11 +111,16 @@ if [ "$remove" = 1 ]; then
 fi
 
 # ── Installation ─────────────────────────────────────────────────────────────
-if [ "$is_cachyos" = 1 ]; then
-    say "Detected CachyOS: installing from 'cachyos/sunshine'..."
+if [ "$is_omarchy" = 1 ]; then
+    say "Detected Omarchy: installing exclusively from 'omarchy/sunshine'..."
+    if ! pacman-conf --repo-list 2>/dev/null | grep -qx 'omarchy'; then
+        die "omarchy repository not found in $PACMAN_CONF; refusing to fall back"
+    fi
+    run $SUDO pacman -S --needed --noconfirm omarchy/sunshine
+elif [ "$is_cachyos" = 1 ]; then
+    say "Detected CachyOS: installing exclusively from 'cachyos/sunshine'..."
     if ! pacman-conf --repo-list 2>/dev/null | grep -qx 'cachyos'; then
-        warn "cachyos repository not found in $PACMAN_CONF; refusing to fall back"
-        exit 1
+        die "cachyos repository not found in $PACMAN_CONF; refusing to fall back"
     fi
     run $SUDO pacman -S --needed --noconfirm cachyos/sunshine
 else
