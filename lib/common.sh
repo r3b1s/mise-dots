@@ -10,7 +10,7 @@ DOTS_THEME_HTTPS="https://github.com/r3b1s/${DOTS_THEME_NAME}.git"
 DOTS_THEME_SSH="git@github.com:r3b1s/${DOTS_THEME_NAME}.git"
 
 # require_os <needle>
-# Exit unless /etc/os-release ID or NAME contains <needle> (case-insensitive).
+# Exit unless /etc/os-release ID, NAME, or ID_LIKE contains <needle> (case-insensitive).
 require_os() {
   local needle="${1:?require_os needs an OS name}"
   if [[ ! -r /etc/os-release ]]; then
@@ -19,10 +19,16 @@ require_os() {
   fi
   # shellcheck source=/dev/null
   . /etc/os-release
-  if [[ "${ID,,}" != *"${needle,,}"* && "${NAME,,}" != *"${needle,,}"* ]]; then
+  if [[ "${ID,,}" != *"${needle,,}"* && "${NAME,,}" != *"${needle,,}"* && "${ID_LIKE:-}" != *"${needle,,}"* ]]; then
     echo "Error: this task requires ${needle} (detected: ${PRETTY_NAME:-${NAME:-unknown}})." >&2
     exit 1
   fi
+}
+
+# require_arch
+# Convenience helper to require Arch Linux or an Arch-based distribution (Omarchy, CachyOS, etc.)
+require_arch() {
+  require_os "arch"
 }
 
 # clone_repo <https-url> <ssh-url> <destination>
