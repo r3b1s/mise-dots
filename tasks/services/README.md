@@ -15,7 +15,6 @@ All service tasks are non-destructive and strictly opt-in. None of these service
 | `services:paseo:upgrade` | Upgrade Paseo CLI and desktop app | User | `-n` |
 | `services:paseo:appimage` | Install/update Paseo desktop AppImage | User | `--check`, `--remove`, `--tag <tag>`, `-n` |
 | `services:sunshine` | Sunshine GameStream server for Moonlight | User / Session | `--remove`, `-n` |
-| `services:voxtype` | Voxtype push-to-talk dictation with Parakeet ONNX model | User / Session | `--remove`, `-n` |
 
 ## Design & Architecture
 
@@ -23,13 +22,13 @@ All service tasks are non-destructive and strictly opt-in. None of these service
 - **System services (`incus`, `kanata`)**:
   - Run with root privilege or dedicated unprivileged system users (`kanata`, `incus-admin`).
   - Configure device permissions via `/etc/udev/rules.d/`, kernel modules via `/etc/modules-load.d/`, and user accounts via `/etc/sysusers.d/`.
-- **User services (`paseo`, `sunshine`, `syncthing`, `voxtype`)**:
+- **User services (`paseo`, `sunshine`, `syncthing`)**:
   - Run within the user session (`systemctl --user` or Podman rootless Quadlet).
   - Placed in `~/.config/systemd/user/` or `~/.config/containers/systemd/`.
   - Supervised by systemd without needing root privileges.
 
 ### Graphical Session Autostart Hooks
-Services that depend on active graphical displays or hotkeys (e.g., Sunshine, Voxtype) hook into:
+Services that depend on active graphical displays (e.g., Sunshine) hook into:
 - **i3**: `~/.config/i3/conf.d/06-services.conf`
 - **Hyprland**: `~/.config/hypr/cachy-services.lua` (loaded dynamically by `~/.config/hypr/cachy.lua`)
 
@@ -39,7 +38,6 @@ Auxiliary service configurations, unit files, and layout templates are maintaine
 - `lib/services/paseo/`: `paseo.service`
 - `lib/services/sunshine/`: `sunshine.service`
 - `lib/services/syncthing/`: `syncthing.container`
-- `lib/services/voxtype/`: `config.toml`
 
 ### Common Flags
 All service tasks implement standard CLI flags:
