@@ -1,0 +1,36 @@
+[Unit]
+Description=Paseo Daemon - AI coding agent environment
+Documentation=https://paseo.sh/docs
+After=network.target
+
+[Service]
+Type=simple
+
+# Ensure user CLIs (claude, codex, opencode, git, node, etc.) and mise shims are available to Paseo and spawned agents
+Environment="PATH=%h/.local/share/mise/shims:%h/.local/bin:/usr/local/bin:/usr/bin:/bin"
+Environment=PASEO_HOME=%h/.paseo
+
+# Enable the self-hosted bundled web UI, on the daemon's listen address (daemon.listen in
+# ~/.paseo/config.json, set by tasks/services/paseo.sh: 127.0.0.1:6767, or the NetBird or Tailscale address)
+Environment=PASEO_WEB_UI_ENABLED=true
+
+# Disable outbound remote relay (accept direct connections only)
+Environment=PASEO_RELAY_ENABLED=false
+
+# Run in foreground deployment mode so systemd tracks daemon lifecycle directly
+ExecStart=/usr/bin/env mise exec -- paseo daemon run
+
+# Gracefully signal the supervisor to shut down and release the PID lock
+ExecStop=/usr/bin/env mise exec -- paseo daemon stop
+
+# Restart policy: recover from crashes, but stay stopped on manual stop or disable
+Restart=on-failure
+RestartSec=5
+
+# Termination and timeout management
+TimeoutStopSec=30
+KillMode=control-group
+KillSignal=SIGTERM
+
+[Install]
+WantedBy=default.target

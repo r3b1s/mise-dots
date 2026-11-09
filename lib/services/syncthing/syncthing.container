@@ -1,0 +1,64 @@
+# Rootless Syncthing (official image), as a Quadlet unit.
+# Template: tasks/services/syncthing.sh fills in @TAILSCALE_IP@ and writes the result to
+# ~/.config/containers/systemd/syncthing.container.
+# GUI: http://127.0.0.1:8384 (set a GUI password on first start).
+
+[Unit]
+Description=Syncthing (rootless podman)
+
+[Container]
+ContainerName=syncthing
+Image=docker.io/syncthing/syncthing:2
+AutoUpdate=registry
+# Device name shown to peers; %H is this machine's hostname.
+HostName=%H
+
+# The host UID is the container UID, and keep-id adds a passwd entry with the
+# host user's name. The entrypoint sees a non-root UID and execs syncthing
+# directly: no setcap, chown or su-exec.
+UserNS=keep-id
+
+# Syncthing's own state (config.xml, keys, index database), not synced files.
+# Mounted over the image's VOLUME, so podman makes no anonymous volume owned by
+# a subuid.
+Volume=%h/.local/share/syncthing-container:/var/syncthing
+# The one synced directory, at the same path inside as on the host, so the
+# folder path in the GUI is the real one (e.g. /home/<you>/Sync).
+Volume=%h/Sync:%h/Sync
+# The image sets HOME=/var/syncthing, which made "~/Sync" in the GUI land in
+# the state mount above. With the host's HOME, ~ means the same in both places.
+# The state still goes to /var/syncthing/config: STHOMEDIR sets it, not HOME.
+Environment=HOME=%h
+Environment=STNODEFAULTFOLDER=1
+
+# Sync only over Tailscale. No host network: pasta binds outbound IPv4 sockets
+# to tailscale0 and gives the container no IPv6 (-4; IPv6 would bypass the
+# outbound IPv4 interface), so it cannot reach anything outside the tailnet, and
+# 22000 is published on this host's Tailscale address only. Tailscale gives
+# tailscale0 a /32 and puts its 100.64.0.0/10 route in table 52, so pasta would
+# copy a /32 with no routes; -a @TAILSCALE_IP@/10 and -g 100.64.0.1 give the
+# container a route into the tap (--no-map-gw keeps 100.64.0.1 from mapping to
+# the host's 127.0.0.1). The GUI is on loopback only. @TAILSCALE_IP@ is this
+# host's tailscale0 address, asked for by syncthing.sh. Nothing is published on
+# 21027: local discovery is a LAN broadcast and cannot cross pasta.
+Network=pasta:-4,--outbound-if4,tailscale0,-a,@TAILSCALE_IP@/10,-g,100.64.0.1,--no-map-gw
+PublishPort=127.0.0.1:8384:8384
+PublishPort=@TAILSCALE_IP@:22000:22000/tcp
+PublishPort=@TAILSCALE_IP@:22000:22000/udp
+
+# The image's root is read-only; config.xml (GUI changes) and the synced folder
+# are on the bind mounts, which stay writable. The non-root entrypoint path
+# needs no capabilities.
+ReadOnly=true
+DropCapability=ALL
+NoNewPrivileges=true
+
+[Service]
+ExecStartPre=/usr/bin/mkdir -p %h/.local/share/syncthing-container %h/Sync
+# A user unit cannot order itself after the system's tailscaled.service, so a
+# start before tailscale0 is up fails to bind and is retried.
+Restart=on-failure
+RestartSec=30
+
+[Install]
+WantedBy=default.target

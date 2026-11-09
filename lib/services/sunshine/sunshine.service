@@ -1,0 +1,11 @@
+[Unit]
+Description=Sunshine GameStream Server for Moonlight
+Documentation=https://docs.lizardbyte.dev/projects/sunshine
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/sunshine
+Restart=on-failure
+RestartSec=3s
+Slice=app.slice
+

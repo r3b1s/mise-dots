@@ -34,5 +34,7 @@ mise run dots:arch:setup --ssh      # same for Arch/CachyOS
 mise run dots:clone:harness         # clone just harness-dots
 mise run ctf:engagement <name>      # copy the engagement template into the cwd
 mise run scaffold-dirs              # create the common directory tree
+mise run services:syncthing         # set up rootless Syncthing Quadlet container
+mise run 'services:*'               # list or run opt-in background services
 mise run 'dots:*'                   # every dots task
 ```
