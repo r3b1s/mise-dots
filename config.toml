@@ -1,7 +1,7 @@
 # -------- SETTINGS --------- #
 [settings]
 # minimum_release_age = "3d"
-minimum_release_age_excludes = ["pi", "oh-my-pi", "npm:command-code"]
+minimum_release_age_excludes = ["pi", "oh-my-pi", "npm:command-code", "npm:@getpaseo/cli"]
 locked_scopes = ["project"]
 
 [settings.upgrade]
