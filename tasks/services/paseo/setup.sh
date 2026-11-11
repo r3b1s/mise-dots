@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 #MISE description="Install and configure Paseo daemon systemd user service"
-#MISE alias="services:paseo:setup"
+#MISE alias="services:paseo"
 #USAGE flag "--netbird" help="Bind daemon to NetBird (wt0) IPv4 address"
 #USAGE flag "--tailscale" help="Bind daemon to Tailscale (tailscale0) IPv4 address"
 #USAGE flag "--remove" help="Stop service and remove systemd unit"
 #USAGE flag "-n --dry-run" help="Preview actions without modifying system"
 set -euo pipefail
 
-source "${MISE_TASK_DIR}/../../lib/common.sh"
+source "${MISE_TASK_DIR}/../../../lib/common.sh"
 require_arch
 
 say()  { printf '\033[1;34m::\033[0m %s\n' "$*"; }
@@ -105,7 +105,7 @@ fi
 # ── 2. Install systemd user service ──────────────────────────────────────────
 say "Installing systemd user service to $service_file..."
 run mkdir -p "$service_dir"
-run cp "${MISE_TASK_DIR}/../../lib/services/paseo/paseo.service" "$service_file"
+run cp "${MISE_TASK_DIR}/../../../lib/services/paseo/paseo.service" "$service_file"
 
 # ── 3. Daemon reload ──────────────────────────────────────────────────────────
 say "Reloading systemd user daemon..."

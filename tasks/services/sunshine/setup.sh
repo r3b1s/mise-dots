@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 #MISE description="Opt in to Sunshine GameStream server user service (Arch-based)"
-#MISE alias="services:sunshine:setup"
+#MISE alias="services:sunshine"
 #USAGE flag "--remove" help="Stop service, remove autostart hooks, and uninstall sunshine"
 #USAGE flag "-n --dry-run" help="Preview actions without modifying system"
 set -euo pipefail
 
-source "${MISE_TASK_DIR}/../../lib/common.sh"
+source "${MISE_TASK_DIR}/../../../lib/common.sh"
 require_arch
 
 PACMAN_CONF="/etc/pacman.conf"
@@ -165,7 +165,7 @@ fi
 # ── Systemd User Service Setup ───────────────────────────────────────────────
 say "Setting up systemd user service..."
 run mkdir -p "$(dirname "$user_service_dst")"
-run cp "${MISE_TASK_DIR}/../../lib/services/sunshine/sunshine.service" "$user_service_dst"
+run cp "${MISE_TASK_DIR}/../../../lib/services/sunshine/sunshine.service" "$user_service_dst"
 
 if command -v systemctl >/dev/null 2>&1; then
     run systemctl --user daemon-reload

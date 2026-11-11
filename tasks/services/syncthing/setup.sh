@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 #MISE description="Install rootless Syncthing Quadlet container (Arch-based)"
-#MISE alias="services:syncthing:setup"
+#MISE alias="services:syncthing"
 #USAGE flag "--reconfigure" help="Prompt again for Tailscale IPv4 address"
 #USAGE flag "--remove" help="Stop service and remove container unit"
 #USAGE flag "-n --dry-run" help="Preview actions without modifying system"
 set -euo pipefail
 
-source "${MISE_TASK_DIR}/../../lib/common.sh"
+source "${MISE_TASK_DIR}/../../../lib/common.sh"
 require_arch
 
 say()  { printf '\033[1;34m::\033[0m %s\n' "$*"; }
@@ -34,7 +34,7 @@ if [ "$(id -u)" -eq 0 ]; then
     die "run this as your own user, not root: the container is rootless"
 fi
 
-template="${MISE_TASK_DIR}/../../lib/services/syncthing/syncthing.container"
+template="${MISE_TASK_DIR}/../../../lib/services/syncthing/syncthing.container"
 dest="${XDG_CONFIG_HOME:-$HOME/.config}/containers/systemd/syncthing.container"
 
 # ── Removal ───────────────────────────────────────────────────────────────────

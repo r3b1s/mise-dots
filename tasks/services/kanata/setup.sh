@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 #MISE description="Opt in to Kanata keyboard remapper system service (Arch-based)"
-#MISE alias="services:kanata:setup"
+#MISE alias="services:kanata"
 #USAGE flag "--remove" help="Disable kanata service and remove system configs"
 #USAGE flag "-n --dry-run" help="Preview actions without modifying system"
 set -euo pipefail
 
-source "${MISE_TASK_DIR}/../../lib/common.sh"
+source "${MISE_TASK_DIR}/../../../lib/common.sh"
 require_arch
 
 say()  { printf '\033[1;34m::\033[0m %s\n' "$*"; }
@@ -29,7 +29,7 @@ done
 SUDO=
 [ "$(id -u)" -ne 0 ] && SUDO=sudo
 
-KANATA_DIR="${MISE_TASK_DIR}/../../lib/services/kanata"
+KANATA_DIR="${MISE_TASK_DIR}/../../../lib/services/kanata"
 
 # ── Removal ───────────────────────────────────────────────────────────────────
 if [ "$remove" = 1 ]; then

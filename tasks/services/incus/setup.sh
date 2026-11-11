@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 #MISE description="Opt in to Incus system-container and VM manager (Arch-based)"
-#MISE alias="services:incus:setup"
+#MISE alias="services:incus"
 #USAGE flag "--ui" help="Install incus-ui web UI package"
 #USAGE flag "--remove" help="Disable incus services and remove firewall zone"
 #USAGE flag "-n --dry-run" help="Preview actions without modifying system"
 set -euo pipefail
 
-source "${MISE_TASK_DIR}/../../lib/common.sh"
-source "${MISE_TASK_DIR}/../../lib/firewalld.sh"
+source "${MISE_TASK_DIR}/../../../lib/common.sh"
+source "${MISE_TASK_DIR}/../../../lib/firewalld.sh"
 require_arch
 
 BRIDGE=incusbr0

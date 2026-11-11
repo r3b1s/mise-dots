@@ -11,7 +11,7 @@ Environment="PATH=%h/.local/share/mise/shims:%h/.local/bin:/usr/local/bin:/usr/b
 Environment=PASEO_HOME=%h/.paseo
 
 # Enable the self-hosted bundled web UI, on the daemon's listen address (daemon.listen in
-# ~/.paseo/config.json, set by tasks/services/paseo.sh: 127.0.0.1:6767, or the NetBird or Tailscale address)
+# ~/.paseo/config.json, set by tasks/services/paseo/setup.sh: 127.0.0.1:6767, or the NetBird or Tailscale address)
 Environment=PASEO_WEB_UI_ENABLED=true
 
 # Disable outbound remote relay (accept direct connections only)

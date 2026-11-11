@@ -1,5 +1,5 @@
 # Rootless Syncthing (official image), as a Quadlet unit.
-# Template: tasks/services/syncthing.sh fills in @TAILSCALE_IP@ and writes the result to
+# Template: tasks/services/syncthing/setup.sh fills in @TAILSCALE_IP@ and writes the result to
 # ~/.config/containers/systemd/syncthing.container.
 # GUI: http://127.0.0.1:8384 (set a GUI password on first start).
 
