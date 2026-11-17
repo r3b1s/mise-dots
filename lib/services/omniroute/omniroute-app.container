@@ -1,0 +1,38 @@
+# OmniRoute app container. Part of the omniroute.pod.
+# The pod publishes the dashboard/API/live-WS ports; the app's own unit only
+# needs the env file. Templates: none — setup.sh renders the pod's PublishPort
+# lines separately and installs this file verbatim.
+# Data ($HOME/.local/share/omniroute/data) is bind-mounted over /app/data so the
+# repo checkout never holds runtime state; image is docker.io/diegosouzapw/omniroute:latest.
+
+[Unit]
+Description=OmniRoute AI gateway (app, rootless podman)
+Requires=omniroute-redis.service
+After=omniroute-redis.service
+
+[Container]
+ContainerName=omniroute
+Image=docker.io/diegosouzapw/omniroute:latest
+Pod=omniroute.pod
+UserNS=keep-id
+Environment=DATA_DIR=/app/data
+Environment=REDIS_URL=redis://127.0.0.1:6379
+Environment=OMNIROUTE_MEMORY_MB=2048
+EnvironmentFile=%h/.config/omniroute/.env
+Volume=%h/.local/share/omniroute/data:/app/data
+HealthCmd=CMD-SHELL, node healthcheck.mjs || exit 1
+HealthInterval=30s
+HealthTimeout=5s
+HealthRetries=3
+HealthStartPeriod=20s
+DropCapability=ALL
+NoNewPrivileges=true
+Tmpfs=/tmp
+
+[Service]
+Restart=on-failure
+RestartSec=10
+TimeoutStartSec=300
+
+[Install]
+WantedBy=default.target

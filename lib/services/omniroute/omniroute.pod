@@ -1,0 +1,23 @@
+# OmniRoute pod (app + Redis), as Quadlet units.
+# Template: tasks/services/omniroute/setup.sh fills in @BIND@, @DASHBOARD_PORT@,
+# @API_PORT@ and @LIVE_WS_PORT@, then installs this file together with
+# omniroute-app.container and omniroute-redis.container to
+# ~/.config/containers/systemd/.
+# Dashboard: http://127.0.0.1:20128 (or http://<tailscale-ip>:20128 with --tailscale).
+
+[Unit]
+Description=OmniRoute AI gateway pod (app + Redis)
+
+[Pod]
+PodName=omniroute
+# Rendered by tasks/services/omniroute/setup.sh: one PublishPort line per
+# bind address (127.0.0.1 always, plus the Tailnet IP with --tailscale) for
+# each of the dashboard, API and live-WS ports.
+@PUBLISH_PORTS@
+
+[Service]
+Restart=on-failure
+TimeoutStartSec=300
+
+[Install]
+WantedBy=default.target

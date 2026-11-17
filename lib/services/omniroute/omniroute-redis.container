@@ -1,0 +1,27 @@
+# Redis for the OmniRoute pod. Internal to the pod network only: no published
+# port, so host-side tooling reaches it via `podman exec omniroute-redis redis-cli`.
+
+[Unit]
+Description=OmniRoute Redis (rootless podman)
+
+[Container]
+ContainerName=omniroute-redis
+Image=docker.io/library/redis:8-alpine
+Pod=omniroute.pod
+UserNS=keep-id
+Volume=omniroute-redis-data:/data
+Exec=redis-server --save 60 1 --loglevel warning
+HealthCmd=CMD-SHELL, redis-cli ping | grep -q PONG
+HealthInterval=10s
+HealthTimeout=5s
+HealthRetries=3
+DropCapability=ALL
+NoNewPrivileges=true
+
+[Service]
+Restart=on-failure
+RestartSec=10
+TimeoutStartSec=120
+
+[Install]
+WantedBy=default.target

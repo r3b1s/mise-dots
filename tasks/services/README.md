@@ -15,6 +15,9 @@ All service tasks are non-destructive and strictly opt-in. None of these service
 | `services:paseo:upgrade` | Upgrade Paseo CLI and desktop app | User | `-n` |
 | `services:paseo:appimage` | Install/update Paseo desktop AppImage | User | `--check`, `--remove`, `--tag <tag>`, `-n` |
 | `services:sunshine` | Sunshine GameStream server for Moonlight | User / Session | `--remove`, `-n` |
+| `services:omniroute` | OmniRoute AI gateway (Podman Quadlet pod: app + Redis, loopback-only) | User (Quadlet) | `--tailscale`, `--reconfigure`, `--remove`, `-n` |
+| `services:omniroute:update` | Back up, pull latest images, restart the OmniRoute pod | User (Quadlet) | `--no-backup`, `-n` |
+| `services:omniroute:backup` | Back up OmniRoute data dir + env file to a timestamped tarball | User | `--dest <dir>`, `-n` |
 
 ## Design & Architecture
 
