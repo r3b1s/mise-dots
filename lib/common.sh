@@ -77,3 +77,14 @@ https_to_ssh() {
   local path="${rest#*/}"
   printf 'git@%s:%s.git\n' "${host}" "${path%.git}"
 }
+
+# ipv4_net A.B.C.D/LEN
+# Print the network address of an IPv4 CIDR: 10.185.13.1/24 -> 10.185.13.0/24.
+ipv4_net() {
+  local a b c d n m len=${1#*/}
+  IFS=. read -r a b c d <<<"${1%/*}"
+  n=$(( (a << 24) | (b << 16) | (c << 8) | d ))
+  m=$(( len == 0 ? 0 : (0xFFFFFFFF << (32 - len)) & 0xFFFFFFFF ))
+  n=$(( n & m ))
+  printf '%d.%d.%d.%d/%d\n' $(( n >> 24 & 255 )) $(( n >> 16 & 255 )) $(( n >> 8 & 255 )) $(( n & 255 )) "$len"
+}

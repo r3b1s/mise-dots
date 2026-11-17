@@ -11,6 +11,7 @@ Installs open-source tools and applications that are not packaged in Arch/CachyO
 |---|---|---|
 | `pkg:oss:artcraft` | ArtCraft AI image/video creative IDE | Built from source via scoped toolchain in `lib/pkg/oss/artcraft/mise.toml` (Node 24, Rust, Tauri CLI, CMake) |
 | `pkg:oss:coi` | `coi` (Code on Incus) | Installed from GitHub release binary with SHA-256 verification |
+| `pkg:oss:incus-compose` | `incus-compose` (Compose for Incus), bound to the local Incus over `incusbr0` | Installed from the GitHub release archive, verified against GitHub's SHA-256 digest and `checksums.txt` (plus `gh attestation verify` when `gh` is logged in); installs `skopeo` and sets `core.https_address`; leaves firewall rules to you |
 
 ### 2. Proprietary Software (`pkg:proprietary:*`)
 Installs closed-source/vendor applications shipped as prebuilt Linux archives:

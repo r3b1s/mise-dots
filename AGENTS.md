@@ -36,7 +36,7 @@ When creating or modifying task scripts that accept arguments, flags, or forward
   ```bash
   source "${MISE_TASK_DIR}/../../lib/common.sh"
   ```
-  Available helpers: `require_os`, `clone_repo`, `link_theme`, `use_ssh_when_requested`.
+  Available helpers: `require_os`, `require_arch`, `clone_repo`, `link_theme`, `use_ssh_when_requested`, `https_to_ssh`, `ipv4_net`.
 
 ## Configuration & Syncing
 
